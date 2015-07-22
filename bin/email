@@ -1,0 +1,31 @@
+#!/bin/bash
+
+while getopts ":f:t:s:m:" OPTION
+do
+    case $OPTION in
+        f)
+          FROM=$OPTARG
+          ;;
+        t)
+          TO=$OPTARG
+          ;;
+        s)
+          SUBJECT=$OPTARG
+          ;;
+        m)
+          MESSAGE=$OPTARG
+          ;;
+        ?)
+          echo "$0 -f <from> -t <rcpt1@example.com,rcpt2@example.com> -s <subject> -m </path/to/message-file>"
+          exit
+          ;;
+    esac
+done
+
+if [[ ! $FROM || ! $TO || ! $SUBJECT || ! -f $MESSAGE ]]; then
+    echo "FROM, TO, SUBJECT or message file are missing."
+     echo "$0 -f <from> -t \"<rcpt1@example.com,rcpt2@example.com>\" -s \"<subject>\" -m </path/to/message-file>"
+    exit 1
+fi
+
+docker run -e FROM="$FROM" -e TO="$TO" -e SUBJECT="$SUBJECT" -v $MESSAGE:/tmp/message.txt -v /home/core/.aws:/root/.aws suet/aws-ses

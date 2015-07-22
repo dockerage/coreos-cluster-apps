@@ -1,0 +1,80 @@
+#!/bin/bash -e
+#
+# Register with AWS route53 service.
+# Suport for A (ipv4) record only. Can be easily changed to support other types.
+#
+
+while getopts ":duz:n:" OPTION
+do
+    case $OPTION in
+        d)
+          action="DELETE"
+          ;;
+        u)
+          action="UPSERT"
+          ;;
+        n)
+          node_name=$OPTARG
+          ;;
+        z)
+          zone_name=$OPTARG
+          ;;
+        ?)
+          echo "$0 -d|-u -z <zone> -n <node_name>"
+          exit
+          ;;
+    esac
+done
+if [ $# -ne 5 ];
+then
+ echo "$0 -d|-u -z <zone> -n <node_name>"
+ exit 1
+fi
+
+node_name=${node_name/.*/}.${zone_name}
+
+# Deployment key
+AWS_CONFIG_ENV=/root/.aws/envvars
+[[ -f $AWS_CONFIG_ENV ]] || /opt/bin/setup-aws-env
+
+# AWS cli container image
+IMAGE=suet/awscli:latest
+docker history $IMAGE > /dev/null 2>&1 || docker pull $IMAGE
+
+# Address to register
+if [ "X$zone_name" = "Xcluster.local" ];
+then
+ address=$(/usr/bin/curl -s http://169.254.169.254/latest/meta-data/local-ipv4)
+else
+ address=$(/usr/bin/curl -s http://169.254.169.254/latest/meta-data/public-ipv4)
+fi
+
+# Zone to reguster
+CMD="aws route53  list-hosted-zones-by-name --max-items 1 --dns-name $zone_name | grep -Eo 'hostedzone/[[:alnum:]]+' | sed 's#hostedzone/##'"
+hosted_zone_id=$(docker run --rm --env-file=$AWS_CONFIG_ENV $IMAGE /bin/bash -c "$CMD")
+
+mkdir -p /var/lib/apps-data/tmp
+cat > /var/lib/apps-data/tmp/$node_name.json <<CHANGESET
+{
+    "Comment": "Update vi $0",
+    "Changes": [
+        {
+            "Action": "${action}",
+            "ResourceRecordSet": {
+                "Name": "${node_name}",
+                "Type": "A",
+                "TTL": 60,
+                "ResourceRecords": [
+                    {
+                        "Value": "${address}"
+                    }
+                ]
+            }
+        }
+    ]
+}
+CHANGESET
+
+# Update the DNS record
+CMD="aws route53 change-resource-record-sets --hosted-zone-id $hosted_zone_id --change-batch file:///root/tmp/$node_name.json"
+docker run --rm -v /var/lib/apps-data/tmp:/root/tmp --env-file=$AWS_CONFIG_ENV $IMAGE /bin/bash -c "$CMD"
