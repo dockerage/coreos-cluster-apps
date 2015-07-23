@@ -35,7 +35,6 @@ node_name=${node_name/.*/}.${zone_name}
 
 # Deployment key
 AWS_CONFIG_ENV=/root/.aws/envvars
-[[ -f $AWS_CONFIG_ENV ]] || /opt/bin/setup-aws-env
 
 # AWS cli container image
 IMAGE=suet/awscli:latest
