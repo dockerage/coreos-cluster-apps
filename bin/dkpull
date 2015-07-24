@@ -1,0 +1,13 @@
+#!/bin/sh
+
+if [ -z $1 ]
+    then echo "Usage: $0 <image>"
+fi
+
+DOCKER_REPO="${DOCKER_REPO:-dockerhub.coreos-cluster.local}"
+
+# if not already pulled, try local first then remote
+#docker history ${1} > /dev/null 2>&1 || ( docker pull "${DOCKER_REPO}/$1" && docker tag "${DOCKER_REPO}/$1" $1 ) || docker pull $1
+
+# force update
+docker pull "${DOCKER_REPO}/$1" && docker tag "${DOCKER_REPO}/$1" $1 || docker pull $1

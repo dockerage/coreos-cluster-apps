@@ -1,0 +1,13 @@
+#!/bin/bash -e
+
+if [ -z $1 ]
+    then echo "Usage: $0 <image_name:tag>"
+fi
+
+DOCKER_REPO="${DOCKER_REPO:-dockerhub.coreos-cluster.local}"
+
+id=`docker inspect --format "{{ .Id }}" $1`
+echo docker tag $id "${DOCKER_REPO}/$1"
+docker tag $id "${DOCKER_REPO}/$1"
+echo docker push "${DOCKER_REPO}/$1"
+docker push "${DOCKER_REPO}/$1"

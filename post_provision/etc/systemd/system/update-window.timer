@@ -1,0 +1,5 @@
+[Unit]
+Description=Reboot timer
+
+[Timer]
+OnCalendar=*-*-* 05,06:00/30:00

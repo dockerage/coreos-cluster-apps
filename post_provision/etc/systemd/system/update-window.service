@@ -1,0 +1,5 @@
+[Unit]
+Description=Reboot if an update has been downloaded
+
+[Service]
+ExecStart=/bin/bash /opt/bin/update-window.sh

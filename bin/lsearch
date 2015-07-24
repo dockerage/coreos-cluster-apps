@@ -1,0 +1,12 @@
+#!/bin/bash
+
+DOCKER_REPO="${DOCKER_REPO:-dockerhub.coreos-cluster.local}"
+
+str=`curl -s -XGET "http://${DOCKER_REPO}/v1/search?q=$1"`
+IFS=,
+foo=($str)
+
+for i in ${foo[*]}
+do
+    echo $i | grep name | sed -e 's/\"//g' -e "s/library\///" | awk '{ print $2}' | sed -e "s/}]}//g" | sed -e "s/^/$DOCKER_REPO\//" 
+done

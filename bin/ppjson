@@ -1,0 +1,36 @@
+#!/usr/bin/bash
+
+command="$@"
+
+# Output directory shared into the toolbox
+outputFile=/home/core/output.$$
+toolboxFile=/media/root/$outputFile
+
+help(){
+    echo "Usage:./ppjson [members|leader|store|version][command with JSON output]"
+    exit 0
+}
+case "$command" in
+    member|members )
+        curl -L -s localhost:2379/v2/members > $outputFile
+        ;;
+    leader|self|store)
+        curl -L -s localhost:2379/v2/stats/$command > $outputFile
+        ;;
+    version)
+        curl -L -s localhost:2379/version
+        echo ""
+        ;;
+   h|help)
+       help
+       ;;
+    *)
+       if [ ! -z $command ];
+       then
+           $command > /home/core/output.$$
+       else
+           help
+       fi
+       ;;
+esac
+[ -f $outputFile ] && toolbox -q python -m json.tool $toolboxFile && rm $outputFile

@@ -1,0 +1,64 @@
+#!/bin/bash -e
+
+# This script downlaods a s3 file
+
+get_value() {
+    echo -n $(curl -s http://169.254.169.254/latest/meta-data/iam/security-credentials/$roleProfile/ \
+        | grep "$1" \
+        | awk -F":" '{print $2}' \
+        | sed 's/^[ ^t]*//;s/"//g;s/,//g')
+}
+
+# Insance profile
+roleProfile=$(curl -s http://169.254.169.254/latest/meta-data/iam/info \
+	| grep -Eo 'instance-profile/([a-zA-Z.-]+)' \
+	| sed  's#instance-profile/##')
+
+# Account
+accountId=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/document \
+	| jq --raw-output .accountId)
+
+# Bucket for the file 
+bucket=${$1:-${accountId}-coreos-cluster-config}
+
+# Path for the file
+s3file=$2
+
+# Find token, AccessKeyId,  line, remove leading space, quote, commas
+s3Token=$(get_value "Token")
+s3Key=$(get_value "AccessKeyId")
+s3Secret=$(get_value "SecretAccessKey")
+
+workDir="/tmp"
+
+cd ${workDir}
+
+# Headers
+resource="/${bucket}/${s3file}"
+contentType="application/x-compressed-tar"
+contentType=""
+dateValue="`date +'%a, %d %b %Y %H:%M:%S %z'`"
+
+# stringToSign
+stringToSign="GET
+
+${contentType}
+${dateValue}
+x-amz-security-token:${s3Token}
+${resource}"
+
+signature=$(/bin/echo -n "$stringToSign" | openssl sha1 -hmac ${s3Secret} -binary | base64)
+
+#echo "curl -s -O -H \"Host: ${bucket}.s3.amazonaws.com\" 
+#	-H \"Content-Type: ${contentType}\" 
+#	-H \"Authorization: AWS ${s3Key}:${signature}\" 
+#	-H \"x-amz-security-token:${s3Token}\" 
+#	-H \"Date: ${dateValue}\" 
+#	https://${bucket}.s3.amazonaws.com/${s3file} " > /tmp/curl-s3-file.log
+
+curl -s -O -H "Host: ${bucket}.s3.amazonaws.com" \
+  -H "Content-Type: ${contentType}" \
+  -H "Authorization: AWS ${s3Key}:${signature}" \
+  -H "x-amz-security-token:${s3Token}" \
+  -H "Date: ${dateValue}" \
+  https://${bucket}.s3.amazonaws.com/${s3file}

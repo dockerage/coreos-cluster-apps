@@ -1,0 +1,9 @@
+#!/bin/sh
+
+containers=$(docker ps  | awk '{print $1}' | grep -v CONTAINER)
+for i in  $containers
+do
+    service=$(docker ps | grep $i | awk '{print $NF}')
+    echo -n "$service: "
+    docker exec $i cat /etc/os-release |grep PRETTY_NAME  | sed 's/PRETTY_NAME=//'
+done

@@ -1,0 +1,28 @@
+#!/bin/sh
+
+if [ -z $1 ]
+    then echo "Usage: $0 site"
+fi
+
+SITE=$1
+
+[[ -d /var/lib/apps/sites/${SITE} ]] || {
+  echo No such site: ${SITE} >&2
+  exit 1
+}
+
+account=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | jq --raw-output .accountId)
+if [[ ! $account ]]; then
+    echo "Error: failed to get the aws account id."
+    exit 4
+fi
+
+S3_CERT="s3://${account}-coreos-cluster-config/certs/${SITE}"
+VOL=/var/lib/apps-data/sites/${SITE}/certs
+mkdir -p ${VOL}
+
+ENV_FILE=/root/.aws/envvars
+IMAGE=suet/awscli:latest
+CMD="aws s3 sync ${S3_CERT}/ ${VOL}/ && chmod 755 ${VOL}/*"
+
+docker run --rm --name s3sync-certs -v ${VOL}:${VOL} --env-file=${ENV_FILE} ${IMAGE} /bin/bash -c "${CMD}"

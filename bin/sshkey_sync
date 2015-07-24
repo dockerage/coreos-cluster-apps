@@ -1,0 +1,30 @@
+#!/bin/sh
+
+if [ -z $1 ]
+  then echo "Usage: $0 key"
+fi
+
+KEY=$1
+SSHDIR=/home/core/.ssh
+VOL=/tmp/s3-sshkeys
+
+[[ -d ${SSHDIR} ]] || {
+  echo No .ssh directory ${SSHDIR}
+  exit 1
+}
+
+accountId=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/document \
+    | jq --raw-output .accountId)
+
+# Bucket for the file 
+bucket="${accountId}-coreos-cluster-config"
+
+S3_SSHKEY="s3://${bucket}/keypairs/${KEY}"
+
+ENV_FILE=/root/.aws/envvars
+IMAGE=suet/awscli:latest
+CMD="aws s3 cp ${S3_SSHKEY} ${VOL}"
+
+docker run --rm --name s3sync-sshkeys -v ${SSHDIR}:${VOL} --env-file=${ENV_FILE} ${IMAGE} /bin/bash -c "${CMD}"
+chown -R core ${SSHDIR}/${KEY}
+chmod 600 ${SSHDIR}/${KEY}

@@ -1,0 +1,21 @@
+#!/bin/bash
+
+if [ -z $1 ]
+    then echo "Usage: $0 envfile"
+fi
+
+envfile=$1
+
+# ensure envfile has at least ./ as a path, otherwise
+# bash will seaerch $PATH for ${envfile}
+[ ${envfile} = ${envfile##*/} ] && envfile=./${envfile}
+
+# Put the expaned env in a location other than /var/lib/apps so it won't be deleted by s3sync
+expfile=${envfile/apps/apps-data}.env
+install -Dv /dev/null ${expfile}
+
+re='^('$(awk -F= 'NF==2 {gsub(/ +/,"",$1);printf("%s|", $1)}' ${envfile})'-)=.*$'
+
+echo Creating ${expfile} from ${envfile}
+. ${envfile}
+set | egrep $re > ${expfile}
