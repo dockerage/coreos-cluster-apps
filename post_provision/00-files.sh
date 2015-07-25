@@ -8,14 +8,6 @@ cp -R etc/profile.d/ /etc/
 chmod 644 /etc/profile.d/*
 chown root /etc/profile.d/*
 
-# Install scripts
-for i in opt/bin/*
-do
-    s=$(basename $i)
-    cp $i /opt/bin/$s
-    chmod 755 /opt/bin/$s
-done
-
 # Install ssh config and ssh keys
 # cp home/core/.ssh/config /home/core/.ssh/config
 # for k in home/core/.ssh/authorized_keys.d/*.pub
