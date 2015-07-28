@@ -3,7 +3,6 @@
 # Register with AWS route53 service.
 # Suport for A (ipv4) record only. Can be easily changed to support other types.
 #
-# Xueshan Feng <sfeng@stanford.edu>
 
 while getopts ":duz:n:" OPTION
 do
@@ -43,7 +42,7 @@ IMAGE=suet/awscli:latest
 docker history $IMAGE > /dev/null 2>&1 || docker pull $IMAGE
 
 # Address to register
-if [ "X$zone_name" = "Xcluster.local" ];
+if [ "X$zone_name" = "Xcoreos-cluster.local" ];
 then
  address=$(/usr/bin/curl -s http://169.254.169.254/latest/meta-data/local-ipv4)
 else

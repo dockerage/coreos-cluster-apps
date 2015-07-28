@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:shibmd="urn:mace:shibboleth:metadata:1.0" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" entityID="https://idpproxy.anchorage.stanford.edu/idp">
+  <md:IDPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+    <md:Extensions>
+      <shibmd:Scope xmlns:shibmd="urn:mace:shibboleth:metadata:1.0" regexp="false">stanford.edu</shibmd:Scope>
+    </md:Extensions>
+    <md:KeyDescriptor use="signing">
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:X509Data>
+          <ds:X509Certificate>MIIErTCCA5WgAwIBAgIJAKdmfNS+kBmGMA0GCSqGSIb3DQEBBQUAMIGVMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTERMA8GA1UEBxMIU3RhbmZvcmQxHDAaBgNVBAoTE1N0YW5mb3JkIFVuaXZlcnNpdHkxFjAUBgNVBAsTDVVuaXZlcnNpdHkgSVQxKDAmBgNVBAMTH2lkcHByb3h5LmFuY2hvcmFnZS5zdGFuZm9yZC5lZHUwHhcNMTUwNDExMDIzODU3WhcNMjUwNDA4MDIzODU3WjCBlTELMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExETAPBgNVBAcTCFN0YW5mb3JkMRwwGgYDVQQKExNTdGFuZm9yZCBVbml2ZXJzaXR5MRYwFAYDVQQLEw1Vbml2ZXJzaXR5IElUMSgwJgYDVQQDEx9pZHBwcm94eS5hbmNob3JhZ2Uuc3RhbmZvcmQuZWR1MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyMmY5IY3zBzzp4XJe5l2gwcHwMObUWMc/q3ZqWcCUIcVMizffIPVFyNp9rxL10spMnomgM3tlrN5a0O5/lcPRlBrNwK7fXrJDsv7GlewERUMwWYT5dC8nUjV0MPwXo7g0ltIbQ4XHAJQEiJDbEDDY/xkuDg/fwbsDe2UlSyumhYRSnbiS8MSL9+Zqp7w/1BSBgnUujc5yXSE6xU1ZuBRoqtxXg9qLDLs/zrio4BdYNHmhGEBuLG5Srj4a9QzLJtQM+4kHlrlaTk5RLIOrgLukvBU76+CBtJFci4Zt3TM2srczGKRN/lx9Ql7MHVAbpm2bSyjnY687XuenRq3EZFD2QIDAQABo4H9MIH6MB0GA1UdDgQWBBT1+h9jZDE7JvD9Q4x2+cTzCbc4kTCBygYDVR0jBIHCMIG/gBT1+h9jZDE7JvD9Q4x2+cTzCbc4kaGBm6SBmDCBlTELMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExETAPBgNVBAcTCFN0YW5mb3JkMRwwGgYDVQQKExNTdGFuZm9yZCBVbml2ZXJzaXR5MRYwFAYDVQQLEw1Vbml2ZXJzaXR5IElUMSgwJgYDVQQDEx9pZHBwcm94eS5hbmNob3JhZ2Uuc3RhbmZvcmQuZWR1ggkAp2Z81L6QGYYwDAYDVR0TBAUwAwEB/zANBgkqhkiG9w0BAQUFAAOCAQEArot3DOxrmEQYI9hkSX7cxWh3x64wN6NV4ASxO/L5k11/ModGUtdZaFF95BoJb3RaJRhLhdes/tKLIrrfHcTAHw/hjQR68ysiwT1kYiu3h/tMK/89u//asGa3ZW3peUmW8cJ47C6J96K138b9ySHYyus+2etC3Ll1bgz+gQ+nIfigSzkPwbzqtsXGhUr6EOoInhayumLNutpnXV+pcm3XUb5Z/C2npR19ZHO7I3DTU/SIUwWExEI57sNP0xW2HHM3SiHttKAtZLPfHUFFf5dL2FcA1CTcTkmGFBTzLRTLygDJCCoABf+1adn0rn8iTKLmPYW21Pb2xO2xPwyjJuQL7Q==</ds:X509Certificate>
+        </ds:X509Data>
+      </ds:KeyInfo>
+    </md:KeyDescriptor>
+    <md:KeyDescriptor use="encryption">
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:X509Data>
+          <ds:X509Certificate>MIIErTCCA5WgAwIBAgIJAKdmfNS+kBmGMA0GCSqGSIb3DQEBBQUAMIGVMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTERMA8GA1UEBxMIU3RhbmZvcmQxHDAaBgNVBAoTE1N0YW5mb3JkIFVuaXZlcnNpdHkxFjAUBgNVBAsTDVVuaXZlcnNpdHkgSVQxKDAmBgNVBAMTH2lkcHByb3h5LmFuY2hvcmFnZS5zdGFuZm9yZC5lZHUwHhcNMTUwNDExMDIzODU3WhcNMjUwNDA4MDIzODU3WjCBlTELMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExETAPBgNVBAcTCFN0YW5mb3JkMRwwGgYDVQQKExNTdGFuZm9yZCBVbml2ZXJzaXR5MRYwFAYDVQQLEw1Vbml2ZXJzaXR5IElUMSgwJgYDVQQDEx9pZHBwcm94eS5hbmNob3JhZ2Uuc3RhbmZvcmQuZWR1MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyMmY5IY3zBzzp4XJe5l2gwcHwMObUWMc/q3ZqWcCUIcVMizffIPVFyNp9rxL10spMnomgM3tlrN5a0O5/lcPRlBrNwK7fXrJDsv7GlewERUMwWYT5dC8nUjV0MPwXo7g0ltIbQ4XHAJQEiJDbEDDY/xkuDg/fwbsDe2UlSyumhYRSnbiS8MSL9+Zqp7w/1BSBgnUujc5yXSE6xU1ZuBRoqtxXg9qLDLs/zrio4BdYNHmhGEBuLG5Srj4a9QzLJtQM+4kHlrlaTk5RLIOrgLukvBU76+CBtJFci4Zt3TM2srczGKRN/lx9Ql7MHVAbpm2bSyjnY687XuenRq3EZFD2QIDAQABo4H9MIH6MB0GA1UdDgQWBBT1+h9jZDE7JvD9Q4x2+cTzCbc4kTCBygYDVR0jBIHCMIG/gBT1+h9jZDE7JvD9Q4x2+cTzCbc4kaGBm6SBmDCBlTELMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExETAPBgNVBAcTCFN0YW5mb3JkMRwwGgYDVQQKExNTdGFuZm9yZCBVbml2ZXJzaXR5MRYwFAYDVQQLEw1Vbml2ZXJzaXR5IElUMSgwJgYDVQQDEx9pZHBwcm94eS5hbmNob3JhZ2Uuc3RhbmZvcmQuZWR1ggkAp2Z81L6QGYYwDAYDVR0TBAUwAwEB/zANBgkqhkiG9w0BAQUFAAOCAQEArot3DOxrmEQYI9hkSX7cxWh3x64wN6NV4ASxO/L5k11/ModGUtdZaFF95BoJb3RaJRhLhdes/tKLIrrfHcTAHw/hjQR68ysiwT1kYiu3h/tMK/89u//asGa3ZW3peUmW8cJ47C6J96K138b9ySHYyus+2etC3Ll1bgz+gQ+nIfigSzkPwbzqtsXGhUr6EOoInhayumLNutpnXV+pcm3XUb5Z/C2npR19ZHO7I3DTU/SIUwWExEI57sNP0xW2HHM3SiHttKAtZLPfHUFFf5dL2FcA1CTcTkmGFBTzLRTLygDJCCoABf+1adn0rn8iTKLmPYW21Pb2xO2xPwyjJuQL7Q==</ds:X509Certificate>
+        </ds:X509Data>
+      </ds:KeyInfo>
+    </md:KeyDescriptor>
+    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://idpproxy.anchorage.stanford.edu/simplesamlphp/saml2/idp/SingleLogoutService.php"/>
+    <md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</md:NameIDFormat>
+    <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://idpproxy.anchorage.stanford.edu/simplesamlphp/saml2/idp/SSOService.php"/>
+  </md:IDPSSODescriptor>
+  <md:ContactPerson contactType="technical">
+    <md:SurName>Administrator</md:SurName>
+    <md:EmailAddress>emerging-tech@lists.stanford.edu</md:EmailAddress>
+  </md:ContactPerson>
+</md:EntityDescriptor>

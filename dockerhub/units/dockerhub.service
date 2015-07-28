@@ -1,0 +1,25 @@
+[Unit]
+Description=Private docker registry
+Requires=docker.service
+After=docker.service
+
+[Service]
+EnvironmentFile=/etc/environment
+EnvironmentFile=/etc/aws/account.envvars
+EnvironmentFile=/var/lib/apps/dockerhub/envvars
+TimeoutStartSec=0
+ExecStartPre=/usr/bin/docker pull ${DOCKER_IMAGE}
+ExecStartPre=-/usr/bin/docker rm %n
+# Run registry container
+ExecStart=/usr/bin/sh -c "docker run --rm --name %n ${DOCKER_OPTS} ${DOCKER_IMAGE}"
+# Register with route 53 private dns
+ExecStartPost=/var/lib/apps/bin/route53-register -u -z coreos-cluster.local -n %p
+ExecStop=/usr/bin/docker stop %n
+ExecStopPost=-/var/lib/apps/bin/route53-register -d -z coreos-cluster.local.local -n %p
+ExecStop=/usr/bin/docker stop %n
+RestartSec=5
+Restart=always
+
+[X-Fleet]
+MachineMetadata=role=dockerhub
+Global=true

@@ -1,0 +1,13 @@
+# this is a unit env file for nginx, the proxy service
+
+# env for nginx
+DOCKER_IMAGE=nginx
+
+DOCKER_OPTS="-p 5443:5443 -p 5080:5080 \
+    -h dockerhub-proxy \
+    -v /var/lib/apps/dockerhub-proxy/conf.d:/etc/nginx/conf.d \
+    -v /var/lib/apps/dockerhub-proxy/auth:/etc/nginx/auth \
+    -v /var/lib/apps-data/log/dockerhub-proxy:/var/log/nginx"
+    
+# Public facing ELB
+ELB=dockerhub-elb

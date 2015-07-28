@@ -1,0 +1,6 @@
+# private key needs to be converted
+# e.g.  openssl rsa -inform PEM -in docker_registry.pem > docker_registry.key
+# Chain file needs to be in reverse order. root cert at the top (the 3rd file)
+# To get arn: aws --profile anchorage iam get-server-certificate --server-certificate-name=docker-registry.stanford.edu
+# Load both dockerhub.stanford.edu and docker-registry.stanford.edu ssl to AWS
+aws --profile anchorage iam upload-server-certificate --server-certificate-name fleetui.anchorage.stanford.edu --certificate-body file://fleetui.crt --private-key file://fleetui.key --certificate-chain file://fleetui.crt

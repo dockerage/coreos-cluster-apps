@@ -1,0 +1,13 @@
+# unit env file for fleet-ui proxy, with apache auth_mellon image
+
+# .dockercfg file under $HOME
+HOME=/home/core
+
+DOCKER_IMAGE=dockerhub.stanford.edu/core/apache-mellon
+DOCKER_OPTS="-p 8083:8080 \
+    --link fleet-ui.service:fleet-ui.service \
+    -v /var/lib/apps/fleet-ui-proxy/auth_mellon:/etc/auth_mellon \
+    -v /var/lib/apps-data/fleet-ui-proxy/certs:/etc/auth_mellon/ssl/certs"
+
+# Public facing ELB
+ELB=fleetui-elb

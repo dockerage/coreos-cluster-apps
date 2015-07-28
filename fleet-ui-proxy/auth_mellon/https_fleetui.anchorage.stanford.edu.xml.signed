@@ -1,0 +1,28 @@
+<EntityDescriptor entityID="https://fleetui.anchorage.stanford.edu" xmlns="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+  <SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+    <KeyDescriptor use="signing">
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:X509Data>
+          <ds:X509Certificate>MIICzjCCAbYCCQCTZJrqXlMTaDANBgkqhkiG9w0BAQUFADApMScwJQYDVQQDDB5m
+bGVldHVpLmFuY2hvcmFnZS5zdGFuZm9yZC5lZHUwHhcNMTUwNDAzMjE0MzM0WhcN
+MjUwNDAyMjE0MzM0WjApMScwJQYDVQQDDB5mbGVldHVpLmFuY2hvcmFnZS5zdGFu
+Zm9yZC5lZHUwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDKTmSmlGma
+reDrxSzn7Fc0w+fWi8mgATf+DUQ3AEjVb/rgDvmX2lhtVe9y5BVHJZrQfQ6xXeW1
+JX6taM6ytGH1TaiX1BSMUAnOqCpU03r7ToVOJZxN4DL7wX2+f033xiV429DniI7f
+PVy1sJ840IBXCdJy6/fy+rQ2ZI/YPRxPXEm7ynut6yK8PpihMlb+KACQyegSwiCc
+ekm7wgNdKNDpeLMVEzQr9UP1Q9sFdOPSZM8/m/BeSim18lCWIcFxNLSPBYXuYcEs
+o49Or8/bGg2Kkm326imI0LdKubZkSwvbGQTjfwvNO73DvKeP/NuqwlS+5ZCE60xS
+tkJY8NTnSy8NAgMBAAEwDQYJKoZIhvcNAQEFBQADggEBAGCUTAS7YBrmk4BWeCjv
+KHLdn7RovgbYDBNcZez0foF81vii8ODxzAmOBrOfDWmEDh4AD1fVvSM9d4GSB+iR
+DTpAJj5PSQ0mFgBXQzv/s2pN2XUJkmZBZJIv4LTZwYVJ85El1IPrf7HkunC18YPm
+f210Ie1KjzVy40SsmrXSCpuY3+9yOHG5uHr29kTFfVGdIKUOrT8/TU4tYRyLtKLY
+3jEoDIhMQsgCyFXgXcblv6iSndgj0qpL4GUuGbmoo6zN56ST09ThzqT+xBVst+Cy
+lOw5XMZmbRylgxJ9awX8Y6ELJGBDPaQyoQnDwOvNfB5F7E43EX0Db0nRydyU+ugc
+PHM=</ds:X509Certificate>
+        </ds:X509Data>
+      </ds:KeyInfo>
+    </KeyDescriptor>
+    <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://fleetui.anchorage.stanford.edu/logout"/>
+    <AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://fleetui.anchorage.stanford.edu/mellon/postResponse" index="0"/>
+  </SPSSODescriptor>
+</EntityDescriptor>

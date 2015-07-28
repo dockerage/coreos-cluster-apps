@@ -1,0 +1,25 @@
+[Unit]
+Description=Fleet UI proxy
+Requires=fleet-ui.service
+Wants=fleet-ui.service
+After=fleet-ui.service
+
+[Service]
+EnvironmentFile=/etc/environment
+EnvironmentFile=/var/lib/apps/fleet-ui-proxy/envvars
+TimeoutStartSec=0
+ExecStartPre=/usr/bin/docker pull ${DOCKER_IMAGE}
+# Run proxy container
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStartPre=/usr/bin/docker run --rm -v /var/lib/apps-data/fleet-ui-proxy/certs/:/tmp suet/awscli \
+     aws s3 cp s3://anchorage-config/certs/anchorage/anchorage-wildcard.key /tmp/server.key ; /usr/bin/sudo chmod 600 /var/lib/apps-data/fleet-ui-proxy/certs/server.key
+ExecStart=/usr/bin/sh -c "docker run --rm --name %n ${DOCKER_OPTS} ${DOCKER_IMAGE}"
+ExecStartPost=/var/lib/apps/bin/elb-register $ELB
+ExecStop=/usr/bin/docker stop %n
+ExecStopPost=/var/lib/apps/bin/elb-deregister $ELB
+RestartSec=10
+Restart=always
+
+[X-Fleet]
+MachineOf=fleet-ui.service
+MachineMetadata=role=admiral

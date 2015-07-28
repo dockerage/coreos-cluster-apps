@@ -1,0 +1,20 @@
+[Unit]
+Description=Fleet UI
+Requires=docker.service
+After=docker.service
+
+[Service]
+Environment="HOME=/home/core"
+EnvironmentFile=/etc/environment
+EnvironmentFile=/var/lib/apps/fleet-ui/envvars
+TimeoutStartSec=0
+#ExecStartPre=/usr/bin/docker pull $IMAGE
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStart=/usr/bin/sh -c "/usr/bin/docker run --rm --name %n ${OPTS} $IMAGE"
+ExecStop=-/usr/bin/docker stop %n
+RestartSec=15
+Restart=always
+
+[X-Fleet]
+X-Conflicts=dockerhub.service
+MachineMetadata=role=admiral
