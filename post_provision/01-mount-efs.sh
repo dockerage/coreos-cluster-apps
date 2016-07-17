@@ -10,3 +10,4 @@ function mount_efs() {
     fi
   fi
 }
+mount_efs
