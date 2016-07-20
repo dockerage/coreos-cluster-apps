@@ -1,1 +1,1 @@
-IMAGE=xueshanf/nodeapp:latest
+IMAGE=xueshanf/docker-nodeapp:latest
