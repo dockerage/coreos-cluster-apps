@@ -18,8 +18,10 @@ els() { etcdctl ls /service/vault/$1; }
 eset() { etcdctl set /service/vault/$1  $2; }
 eget() { etcdctl get /service/vault/$1; }
 
+if  ! etcdctl ls /service/vault ; then
+    etcdctl mkdir /service/vault
+fi
 if [ ! $(els root-token 2> /dev/null ) ]; then
-  etcdctl mkdir /service/vault 2> /dev/null
   echo "Initialize Vault"
   vault init | tee /tmp/vault.init > /dev/null
 
