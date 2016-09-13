@@ -21,8 +21,7 @@ eget() { etcdctl get /service/vault/$1; }
 if [ ! $(els root-token 2> /dev/null ) ]; then
   etcdctl mkdir /service/vault 2> /dev/null
   echo "Initialize Vault"
-  exit 0
-  #vault init | tee /tmp/vault.init > /dev/null
+  vault init | tee /tmp/vault.init > /dev/null
 
   # Store master keys in etcd for operator to retrieve and remove
   COUNTER=1
