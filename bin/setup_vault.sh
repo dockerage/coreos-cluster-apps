@@ -1,11 +1,13 @@
 #!/bin/bash
 set -e
 
+# Modified https://github.com/hashicorp/best-practices/blob/master/packer/config/vault/scripts/setup_vault.sh
+# to use etcd backend.
 # pass -i for interactive run. Otherwise, automatically init and unseal.
 interactive=${1:-'false'}
 
 if [ "X$interactive" = 'X-i' ]; then
-    read -p $'Running this script will initialize & unseal Vault, \nthen put your unseal keys and root token into Consul KV. \n\nIf you are sure you want to continue, type \'yes\': \n' ANSWER
+    read -p $'Running this script will initialize & unseal Vault, \nthen put your unseal keys and root token into Etcd KV. \n\nIf you are sure you want to continue, type \'yes\': \n' ANSWER
   if [ "$ANSWER" != "yes" ]; then
      echo
      echo "Exiting without intializing & unsealing Vault, no keys or tokens were stored."
@@ -53,9 +55,9 @@ instructions() {
 We use an instance of HashiCorp Vault for secrets management.
 It has been automatically initialized and unsealed once. Future unsealing must
 be done manually.
-The unseal keys and root token have been temporarily stored in Consul K/V.
+The unseal keys and root token have been temporarily stored in Etcd K/V.
   /service/vault/root-token /service/vault/unseal-key-{1..5}
-Please securely distribute and record these secrets and remove them from Consul.
+Please securely distribute and record these secrets and remove them from Etcd.
 EOF
 
   exit 1
