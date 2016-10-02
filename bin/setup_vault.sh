@@ -5,6 +5,8 @@ set -e
 # to use etcd backend.
 # pass -i for interactive run. Otherwise, automatically init and unseal.
 interactive=${1:-'false'}
+# Assuming Vault is installed in /opt/bin.
+export PATH=/opt/bin:$PATH
 
 if [ "X$interactive" = 'X-i' ]; then
     read -p $'Running this script will initialize & unseal Vault, \nthen put your unseal keys and root token into Etcd KV. \n\nIf you are sure you want to continue, type \'yes\': \n' ANSWER
